@@ -1,11 +1,12 @@
 
 {
-  "homepage": "https://Sreehari-code.github.io/Chat-App",
+  
 
   "name": "chat-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://Sreehari-code.github.io/Chat-App",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
