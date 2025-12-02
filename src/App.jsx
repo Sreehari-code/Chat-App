@@ -75,7 +75,6 @@ function App() {
   // Listen for online users
   useEffect(() => {
     if (!isLoggedIn) return;
-
     const usersRef = ref(database, 'users');
     const unsubscribe = onValue(usersRef, (snapshot) => {
       const data = snapshot.val();
@@ -91,7 +90,7 @@ function App() {
   // Handle user presence
   useEffect(() => {
     if (!isLoggedIn) return;
-
+   
     const userRef = ref(database, `users/${userId}`);
     
     // Set user as online
@@ -100,13 +99,15 @@ function App() {
       online: true,
       lastSeen: serverTimestamp()
     });
+  
 
     // Set user as offline when disconnected
     onDisconnect(userRef).set({
       username: username,
       online: false,
       lastSeen: serverTimestamp()
-    });
+    })
+  ;
 
     return () => {
       set(userRef, {
@@ -117,11 +118,20 @@ function App() {
     };
   }, [isLoggedIn, username, userId]);
 const [inpId , setId] = useState('')
+const [count , SetCount]= useState(0)
   const id = "Sreehari-Code"
   const handleLogin = () => {
-    if (username.trim() && id == inpId) {
+    if(username == "Sreehari" && id == "Admin Password" ) {setIsLoggedIn(true) , SetCount(count = count+1)}
+   else if (username.trim() && id == inpId && count>0 ) {
+      //  if(onlineUsers.includes("Sreehari")){
       setIsLoggedIn(true);
+       console.log(count);
     }
+    else{
+      console.log(count);
+      alert("Sorry")
+    }
+    
   };
 
   const handleLogout = () => {
@@ -207,7 +217,7 @@ const [inpId , setId] = useState('')
   return (
     <div className="flex h-screen bg-gradient-to-br bg-black">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-900 border-r border-slate-700 flex flex-col">
+      <div className="w-64 bg-stone-900  border-r border-white flex flex-col">
         <div className="p-4 border-b border-gray-100">
           <div className="flex items-center gap-2 text-white">
             <MessageCircle className="w-6 h-6 text-blue-400" />
@@ -233,7 +243,7 @@ const [inpId , setId] = useState('')
           </div>
         </div>
 
-        <div className="p-4 border-t border-slate-700">
+        <div className="p-4 border-t border-white">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
               {username[0].toUpperCase()}
@@ -256,13 +266,13 @@ const [inpId , setId] = useState('')
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <div className="bg-gray-900 border-b border-slate-700 p-4">
+        <div className="bg-stone-900 border-b border-white p-4">
           <h2 className="text-white text-lg font-semibold">General Chat</h2>
           <p className="text-slate-400 text-sm">{onlineUsers.length} members online</p>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-scroll p-4 space-y-4  scrollbar-hide bg-black ">
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <p className="text-slate-500 text-center">
@@ -306,7 +316,7 @@ const [inpId , setId] = useState('')
         </div>
 
         {/* Input */}
-        <div className="bg-gray-900 border-t border-slate-700 p-4">
+        <div className="bg-stone-900 border-t border-white p-4">
           <div className="flex gap-2">
             <input
               type="text"
@@ -314,7 +324,7 @@ const [inpId , setId] = useState('')
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Type a message..."
-              className="flex-1 bg-slate-700 text-white px-4 py-3 rounded-lg border border-slate-600 focus:outline-none focus:border-blue-500 placeholder-slate-400"
+              className="flex-1 bg-stone-800 text-white px-4 py-3 rounded-lg border border-white focus:outline-none focus:border-blue-500 placeholder-gray-3"
             />
             <button
               onClick={handleSendMessage}
